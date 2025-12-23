@@ -7,7 +7,253 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Animated gradient background */
+        .gradient-bg {
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #0f0c29);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Typing effect cursor */
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Scroll reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Skill bar animation */
+        .skill-bar {
+            width: 0%;
+            transition: width 1.5s ease-in-out;
+        }
+
+        .skill-bar.animate {
+            width: var(--skill-level);
+        }
+
+        /* Card hover effects */
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3) 0%, rgba(168, 85, 247, 0.3) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: inherit;
+            z-index: 1;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Glowing button */
+        .glow-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .glow-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .glow-btn:hover::before {
+            left: 100%;
+        }
+
+        .glow-btn:hover {
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+            transform: translateY(-3px);
+        }
+
+        /* Social icons hover */
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px) rotate(360deg);
+        }
+
+        /* Navbar scroll effect */
+        .navbar {
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Profile image animation */
+        .profile-img {
+            animation: morph 8s ease-in-out infinite;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        }
+
+        @keyframes morph {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
+            75% { border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%; }
+        }
+
+        /* Text gradient animation */
+        .gradient-text {
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #667eea);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGradient 5s ease infinite;
+        }
+
+        @keyframes textGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Pulse animation for contact */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Magnetic button effect */
+        .magnetic {
+            transition: transform 0.3s ease;
+        }
+
+        /* Counter animation */
+        .counter {
+            transition: all 0.3s ease;
+        }
+
+        /* Wave animation */
+        .wave {
+            animation: wave 2.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(20deg); }
+            75% { transform: rotate(-15deg); }
+        }
+    </style>
 </head>
 <body class="gradient-bg min-h-screen text-white">
     <!-- Particles Background -->
@@ -395,12 +641,12 @@
 
     <!-- Contact Section -->
     <section id="contact" class="py-32 relative z-10 px-6">
-        <div class="max-w-4xl mx-auto px-2 sm:px-4">
+        <div class="max-w-4xl mx-auto">
             <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 reveal">
                 Skontaktuj <span class="gradient-text">się</span>
             </h2>
             <div class="grid md:grid-cols-2 gap-12">
-                <div class="reveal-left mb-12 md:mb-0">
+                <div class="reveal-left">
                     <h3 class="text-2xl font-semibold mb-6">Porozmawiajmy!</h3>
                     <p class="text-gray-300 mb-8">
                         Masz projekt, który chciałbyś zrealizować? A może po prostu chcesz porozmawiać?
@@ -437,17 +683,17 @@
                     </div>
                 </div>
                 <div class="reveal-right">
-                    <form class="space-y-4 sm:space-y-6 w-full">
+                    <form class="space-y-6">
                         <div>
-                            <input type="text" placeholder="Twoje imię" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 sm:px-6 sm:py-4 focus:outline-none focus:border-purple-500 transition-colors text-base sm:text-lg">
+                            <input type="text" placeholder="Twoje imię" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:outline-none focus:border-purple-500 transition-colors">
                         </div>
                         <div>
-                            <input type="email" placeholder="Twój email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 sm:px-6 sm:py-4 focus:outline-none focus:border-purple-500 transition-colors text-base sm:text-lg">
+                            <input type="email" placeholder="Twój email" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:outline-none focus:border-purple-500 transition-colors">
                         </div>
                         <div>
-                            <textarea rows="5" placeholder="Twoja wiadomość" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 sm:px-6 sm:py-4 focus:outline-none focus:border-purple-500 transition-colors resize-none text-base sm:text-lg"></textarea>
+                            <textarea rows="5" placeholder="Twoja wiadomość" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:outline-none focus:border-purple-500 transition-colors resize-none"></textarea>
                         </div>
-                        <button type="submit" class="glow-btn w-full bg-gradient-to-r from-indigo-500 to-purple-600 px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-semibold pulse text-base sm:text-lg">
+                        <button type="submit" class="glow-btn w-full bg-gradient-to-r from-indigo-500 to-purple-600 px-8 py-4 rounded-xl font-semibold pulse">
                             Wyślij wiadomość <i class="fas fa-paper-plane ml-2"></i>
                         </button>
                     </form>
@@ -459,7 +705,7 @@
     <!-- Footer -->
     <footer class="relative z-10 py-8 border-t border-white/10">
         <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-            <p class="text-gray-400">© 2024 Jakub Kowalczyk. Wszystkie prawa zastrzeżone.</p>
+            <p class="text-gray-400">© 2024 Jan Kowalski. Wszystkie prawa zastrzeżone.</p>
             <div class="flex space-x-6 mt-4 md:mt-0">
                 <a href="#" class="social-icon text-xl hover:text-purple-400"><i class="fab fa-github"></i></a>
                 <a href="#" class="social-icon text-xl hover:text-blue-400"><i class="fab fa-linkedin"></i></a>
@@ -469,6 +715,186 @@
         </div>
     </footer>
 
-    <script src="js/main.js" defer></script>
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 10 + 5 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = Math.random() * 20 + 10 + 's';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Typing effect
+        const phrases = ['Full Stack Developer', 'UI/UX Designer', 'Problem Solver', 'Creative Thinker'];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedText = document.getElementById('typed-text');
+
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                typedText.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedText.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+        typeEffect();
+
+        // Navbar scroll effect
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+            });
+        });
+
+        // Scroll reveal animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal();
+
+        // Skill bar animation
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-bar');
+            
+            skillBars.forEach(bar => {
+                const windowHeight = window.innerHeight;
+                const elementTop = bar.getBoundingClientRect().top;
+
+                if (elementTop < windowHeight - 100) {
+                    bar.classList.add('animate');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateSkillBars);
+        animateSkillBars();
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            
+            counters.forEach(counter => {
+                const windowHeight = window.innerHeight;
+                const elementTop = counter.getBoundingClientRect().top;
+
+                if (elementTop < windowHeight - 100 && !counter.classList.contains('counted')) {
+                    counter.classList.add('counted');
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    let count = 0;
+                    const increment = target / 50;
+                    
+                    const updateCount = () => {
+                        if (count < target) {
+                            count += increment;
+                            counter.textContent = Math.ceil(count) + '+';
+                            setTimeout(updateCount, 30);
+                        } else {
+                            counter.textContent = target + '+';
+                        }
+                    };
+                    updateCount();
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateCounters);
+        animateCounters();
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Magnetic button effect
+        document.querySelectorAll('.magnetic').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // Parallax effect for particles on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const particles = document.querySelectorAll('.particle');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            particles.forEach((particle, index) => {
+                const speed = (index % 5 + 1) * 0.5;
+                particle.style.transform = `translate(${x * speed * 20}px, ${y * speed * 20}px)`;
+            });
+        });
+    </script>
 </body>
 </html>
